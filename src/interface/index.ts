@@ -1,4 +1,4 @@
-import { ORDER_STATUS } from "../helper/enum";
+import { ORDER_STATUS } from "../enum";
 
 export interface IOrderProcessor {
   kitchen: IKitchen;
@@ -43,3 +43,5 @@ export interface IDispatchStrategy {
   setCourier(courier: ICourier): void;
   getCourier(courier: ICourier): void;
 }
+
+

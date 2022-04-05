@@ -1,24 +1,24 @@
 import { DISPATCH_STRATEGY } from "../enum";
-import { ICourier, IOrder, IOrderCourierHandler } from "../interface";
+import {
+  ICourier,
+  IDispatchStrategy,
+  IOrder,
+  IOrderCourierHandler,
+} from "../interface";
 
 export class OrderCourierHandler implements IOrderCourierHandler {
   preparedQueue: IOrder[];
   courierWaitQueue: [ICourier];
-  strategy: DISPATCH_STRATEGY;
+  dispatchStrategy: IDispatchStrategy;
 
-  constructor(strategy: DISPATCH_STRATEGY) {
-    this.strategy = strategy;
+  constructor(dispatchStrategy: IDispatchStrategy) {
+    this.dispatchStrategy = dispatchStrategy;
   }
 
   handlePreparedOrder(order: IOrder) {
-    if (this.strategy.valueOf() === DISPATCH_STRATEGY.FIFO) {
-      
-    }
-    throw new Error("Method not implemented.");
+    this.dispatchStrategy.
   }
-  handleArrivedCourier(courier: ICourier) {
-    throw new Error("Method not implemented.");
-  }
+  handleArrivedCourier(courier: ICourier) {}
 
   addOrderToPreparedQueue(order: IOrder) {
     this.preparedQueue.push(order);

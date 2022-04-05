@@ -1,6 +1,7 @@
 import { APP_CONSTANT } from "./constant/APP_CONSTANT";
 import {
   ICourierDispatcher,
+  IDispatchStrategy,
   IKitchen,
   IOrder,
   IOrderCourierHandler,
@@ -14,6 +15,7 @@ import { Kitchen } from "./module/Kitchen";
 import { delay } from "./helper/delay";
 import { OrderCourierHandler } from "./module/OrderCourierHandler";
 import { DISPATCH_STRATEGY } from "./enum";
+import { DispatchStrategy } from "./module/DispatchStrategy";
 const log = console.log;
 
 class App {
@@ -24,11 +26,12 @@ class App {
   private static kitchen: IKitchen;
   private static courierDispatcher: ICourierDispatcher;
   private static handler: IOrderCourierHandler;
-  private static strategy: DISPATCH_STRATEGY.FIFO;
+  private static strategy: IDispatchStrategy;
   static init(): void {
     log(chalk.blue(`Initilizing application`));
     App.orderData = orderJson as IOrder[];
     App.kitchen = new Kitchen();
+    App.strategy = new DispatchStrategy(DISPATCH_STRATEGY.FIFO);
     App.handler = new OrderCourierHandler(this.strategy);
     App.orderProcessor = new OrderProcessor(
       this.kitchen,

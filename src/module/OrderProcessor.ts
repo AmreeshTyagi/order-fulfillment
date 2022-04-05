@@ -2,6 +2,7 @@ import { DISPATCH_STRATEGY } from "../enum";
 import {
   ICourier,
   ICourierDispatcher,
+  IDispatchStrategy,
   IKitchen,
   IOrder,
   IOrderCourierHandler,
@@ -12,7 +13,7 @@ export class OrderProcessor implements IOrderProcessor {
   kitchen: IKitchen;
   dispatcher: ICourierDispatcher;
   handler: IOrderCourierHandler;
-  strategy: DISPATCH_STRATEGY;
+  strategy: IDispatchStrategy;
 
   constructor(
     kitchen: IKitchen,

@@ -34,7 +34,7 @@ export interface ICourierDispatcher {
 }
 
 export interface IOrderCourierHandler {
-  strategy: DISPATCH_STRATEGY;
+  dispatchStrategy: IDispatchStrategy;
   handlePreparedOrder(order: IOrder);
   addOrderToPreparedQueue(order: IOrder);
   handleArrivedCourier(courier: ICourier);
@@ -48,8 +48,9 @@ export interface ICourier {
 }
 
 export interface IDispatchStrategy {
-  setOrder(order: IOrder): void;
-  getOrder(order: IOrder): void;
-  setCourier(courier: ICourier): void;
-  getCourier(courier: ICourier): void;
+  strategy: DISPATCH_STRATEGY;
+  addOrderToPreparedQueue(order: IOrder): void;
+  removeOrderToPreparedQueue(order: IOrder): void;
+  addCourierToWaitQueue(courier: ICourier): void;
+  removeCourierToWaitQueue(courier: ICourier): void;
 }

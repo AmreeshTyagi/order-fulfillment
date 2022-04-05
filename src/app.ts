@@ -3,6 +3,7 @@ import {
   ICourierDispatcher,
   IKitchen,
   IOrder,
+  IOrderCourierHandler,
   IOrderProcessor,
 } from "./interface";
 import chalk from "chalk";
@@ -11,6 +12,8 @@ import orderJson from "../bin/dispatch_orders.json";
 import { OrderProcessor } from "./module/OrderProcessor";
 import { Kitchen } from "./module/Kitchen";
 import { delay } from "./helper/delay";
+import { OrderCourierHandler } from "./module/OrderCourierHandler";
+import { DISPATCH_STRATEGY } from "./enum";
 const log = console.log;
 
 class App {
@@ -20,13 +23,17 @@ class App {
   private static orderProcessor: IOrderProcessor;
   private static kitchen: IKitchen;
   private static courierDispatcher: ICourierDispatcher;
+  private static handler: IOrderCourierHandler;
+  private static strategy: DISPATCH_STRATEGY.FIFO;
   static init(): void {
     log(chalk.blue(`Initilizing application`));
     App.orderData = orderJson as IOrder[];
     App.kitchen = new Kitchen();
+    App.handler = new OrderCourierHandler(this.strategy);
     App.orderProcessor = new OrderProcessor(
       this.kitchen,
-      this.courierDispatcher
+      this.courierDispatcher,
+      this.handler
     );
     App.start();
   }

@@ -28,6 +28,7 @@
   "dependencies": {
     "chalk": "^2.4.1",
     "color-logger": "^0.0.6",
-    "colors-logger": "^0.4.0"
+    "colors-logger": "^0.4.0",
+    "dayjs": "^1.11.0"
   }
 }

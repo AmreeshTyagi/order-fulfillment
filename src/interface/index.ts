@@ -1,8 +1,9 @@
-import { ORDER_STATUS } from "../enum";
+import { DISPATCH_STRATEGY, ORDER_STATUS } from "../enum";
 
 export interface IOrderProcessor {
   kitchen: IKitchen;
   dispatcher: ICourierDispatcher;
+  handler: IOrderCourierHandler;
 
   receiveOrder(order: IOrder): void;
   prepareOrder(order: IOrder): void;
@@ -12,13 +13,14 @@ export interface IOrderProcessor {
 export interface IKitchen {
   preparedQueue: IOrder[];
 
-  prepareOrder(order: IOrder): Promise<ORDER_STATUS>;
+  prepareOrder(order: IOrder): Promise<IOrder>;
 }
 
 export interface IOrder {
   id: String;
   name: String;
   prepTime: Number;
+  preparedAtTs?: Number;
 }
 
 export interface ICourierDispatcher {
@@ -28,13 +30,21 @@ export interface ICourierDispatcher {
   strategy: IDispatchStrategy;
   courierDelay: Number;
 
-  dispatchCourier(order: IOrder);
+  dispatchCourier(order: IOrder): Promise<ICourier>;
+}
+
+export interface IOrderCourierHandler {
+  strategy: DISPATCH_STRATEGY;
+  handlePreparedOrder(order: IOrder);
+  addOrderToPreparedQueue(order: IOrder);
+  handleArrivedCourier(courier: ICourier);
+  addCourierToWaitQueue(courier: ICourier);
 }
 
 export interface ICourier {
   courierId: String;
   orderId: String;
-  arrivedTs: Number;
+  arrivedAtTs: Number;
 }
 
 export interface IDispatchStrategy {
@@ -43,5 +53,3 @@ export interface IDispatchStrategy {
   setCourier(courier: ICourier): void;
   getCourier(courier: ICourier): void;
 }
-
-

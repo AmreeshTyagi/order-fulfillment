@@ -20,7 +20,7 @@ export interface IOrder {
   id: String;
   name: String;
   prepTime: Number;
-  preparedAtTs?: Number;
+  preparedAtTs?: number;
 }
 
 export interface ICourierDispatcher {
@@ -30,7 +30,7 @@ export interface ICourierDispatcher {
   strategy: IDispatchStrategy;
   courierDelay: Number;
 
-  dispatchCourier(order: IOrder): Promise<ICourier>;
+  dispatchCourier(): Promise<ICourier>;
 }
 
 export interface IOrderCourierHandler {
@@ -42,13 +42,17 @@ export interface IOrderCourierHandler {
 export interface ICourier {
   courierId: String;
   orderId: String;
-  arrivedAtTs: Number;
+  arrivedAtTs: number;
 }
 
 export interface IDispatchStrategy {
-  addOrderToPreparedQueue(order: IOrder): void;
-  removeOrderFromPreparedQueue(order: IOrder): void;
-  addCourierToWaitQueue(courier: ICourier): void;
-  removeCourierFromWaitQueue(courier: ICourier): void;
-  
+  // addOrderToPreparedQueue(order: IOrder): void;
+  // removeOrderFromPreparedQueue(order: IOrder): void;
+  // addCourierToWaitQueue(courier: ICourier): void;
+  // removeCourierFromWaitQueue(courier: ICourier): void;
+
+  handlePreparedOrder(order: IOrder)
+
+  handleArrivedCourier(courier:ICourier)
 }
+

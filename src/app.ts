@@ -16,6 +16,7 @@ import { delay } from "./helper/delay";
 import { OrderCourierHandler } from "./module/OrderCourierHandler";
 import { DISPATCH_STRATEGY } from "./enum";
 import { DispatchStrategy } from "./module/DispatchStrategy";
+import { CourierDispatcher } from "./module/CourierDispatcher";
 const log = console.log;
 
 class App {
@@ -31,6 +32,7 @@ class App {
     log(chalk.blue(`Initilizing application`));
     App.orderData = orderJson as IOrder[];
     App.kitchen = new Kitchen();
+    App.courierDispatcher = new CourierDispatcher();
     App.strategy = new DispatchStrategy(APP_CONSTANT.DISPATCH_STRATEGY);
     App.handler = new OrderCourierHandler(this.strategy);
     App.orderProcessor = new OrderProcessor(

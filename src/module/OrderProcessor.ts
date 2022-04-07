@@ -35,7 +35,7 @@ export class OrderProcessor implements IOrderProcessor {
     });
   }
   dispatchCourier(order: IOrder): void {
-    this.dispatcher.dispatchCourier(order).then((courier) => {
+    this.dispatcher.dispatchCourier().then((courier) => {
       this.handler.handleArrivedCourier(courier);
     });
   }

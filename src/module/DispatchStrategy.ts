@@ -10,16 +10,10 @@ export class DispatchStrategy implements IDispatchStrategy {
     this.strategy =
       strategy == DISPATCH_STRATEGY.FIFO ? new Fifo() : new Matched();
   }
-  addOrderToPreparedQueue(order: IOrder): void {
-    this.strategy.addOrderToPreparedQueue(order);
+  handlePreparedOrder(order: IOrder) {
+    this.strategy.handlePreparedOrder(order);
   }
-  removeOrderFromPreparedQueue(order: IOrder): void {
-    this.strategy.removeOrderFromPreparedQueue(order);
-  }
-  addCourierToWaitQueue(courier: ICourier): void {
-    this.strategy.addCourierToWaitQueue(courier);
-  }
-  removeCourierFromWaitQueue(courier: ICourier): void {
-    this.strategy.removeCourierFromWaitQueue(courier);
+  handleArrivedCourier(courier: ICourier) {
+    this.strategy.handleArrivedCourier(courier);
   }
 }

@@ -1,0 +1,9 @@
+{
+  "remote.SSH.defaultForwardedPorts": [
+  
+  ],
+  "terminal.integrated.env.linux": {
+  
+  },
+  "terminal.integrated.splitCwd": "inherited"
+}

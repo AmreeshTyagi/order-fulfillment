@@ -12,14 +12,15 @@ export class CourierDispatcher implements ICourierDispatcher {
   courierArrivingMINDelay = 3;
   courierArrivingMAXDelay = 15;
 
-  constructor() { }
   arrivedQueue: [ICourier];
   dispatchOrderQueue: [ICourier];
   courierWaitQueue: [ICourier];
   strategy: IDispatchStrategy;
   courierDelay: Number;
 
-  public async dispatchCourier(order: IOrder) {
+  constructor() {}
+
+  public async dispatchCourier() {
     await delay(
       getUniformRandom(
         this.courierArrivingMINDelay,
@@ -27,7 +28,6 @@ export class CourierDispatcher implements ICourierDispatcher {
       )
     );
     let courier = {} as ICourier;
-    courier.orderId = order.id;
     courier.courierId = this.courierCounter.toString();
     this.courierCounter++;
     courier.arrivedAtTs = new Date().getTime();

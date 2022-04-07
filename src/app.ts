@@ -31,7 +31,7 @@ class App {
     log(chalk.blue(`Initilizing application`));
     App.orderData = orderJson as IOrder[];
     App.kitchen = new Kitchen();
-    App.strategy = new DispatchStrategy(DISPATCH_STRATEGY.FIFO);
+    App.strategy = new DispatchStrategy(APP_CONSTANT.DISPATCH_STRATEGY);
     App.handler = new OrderCourierHandler(this.strategy);
     App.orderProcessor = new OrderProcessor(
       this.kitchen,

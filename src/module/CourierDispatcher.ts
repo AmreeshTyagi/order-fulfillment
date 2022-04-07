@@ -12,7 +12,7 @@ export class CourierDispatcher implements ICourierDispatcher {
   courierArrivingMINDelay = 3;
   courierArrivingMAXDelay = 15;
 
-  constructor() {}
+  constructor() { }
   arrivedQueue: [ICourier];
   dispatchOrderQueue: [ICourier];
   courierWaitQueue: [ICourier];

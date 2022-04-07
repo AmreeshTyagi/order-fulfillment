@@ -1,22 +1,25 @@
 import { DISPATCH_STRATEGY } from "../enum";
 import { ICourier, IDispatchStrategy, IOrder } from "../interface";
+import { Fifo } from "./strategy/Fifo";
+import { Matched } from "./strategy/Matched";
 
 export class DispatchStrategy implements IDispatchStrategy {
-  strategy: DISPATCH_STRATEGY;
+  strategy: IDispatchStrategy;
 
   constructor(strategy: DISPATCH_STRATEGY) {
-    this.strategy = strategy;
+    this.strategy =
+      strategy == DISPATCH_STRATEGY.FIFO ? new Fifo() : new Matched();
   }
   addOrderToPreparedQueue(order: IOrder): void {
-    throw new Error("Method not implemented.");
+    this.strategy.addOrderToPreparedQueue(order);
   }
-  removeOrderToPreparedQueue(order: IOrder): void {
-    throw new Error("Method not implemented.");
+  removeOrderFromPreparedQueue(order: IOrder): void {
+    this.strategy.removeOrderFromPreparedQueue(order);
   }
   addCourierToWaitQueue(courier: ICourier): void {
-    throw new Error("Method not implemented.");
+    this.strategy.addCourierToWaitQueue(courier);
   }
-  removeCourierToWaitQueue(courier: ICourier): void {
-    throw new Error("Method not implemented.");
+  removeCourierFromWaitQueue(courier: ICourier): void {
+    this.strategy.removeCourierFromWaitQueue(courier);
   }
 }

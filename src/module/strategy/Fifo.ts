@@ -7,14 +7,18 @@ import {
   IOrder,
   IOrderCourierHandler,
 } from "../../interface";
+import { Statistics } from "../Statistics";
 
 export class Fifo implements IDispatchStrategy {
   preparedQueue: IOrder[];
   courierWaitQueue: ICourier[];
 
-  constructor() {
+  statistics: Statistics;
+
+  constructor(statistics: Statistics) {
     this.preparedQueue = [];
     this.courierWaitQueue = [];
+    this.statistics = statistics;
   }
 
   handlePreparedOrder(order: IOrder) {
@@ -65,16 +69,14 @@ export class Fifo implements IDispatchStrategy {
   }
 
   calculateStats(courier: ICourier, order: IOrder, currentTs: number) {
-    console.log(
-      `Food wait time for order id ${order.id} is  ${
-        currentTs - order.preparedAtTs
-      }`
-    );
+    const foodWaitTime = currentTs - order.preparedAtTs;
+    this.statistics.recordFoodWaitTime(foodWaitTime);
+    console.log(`Food wait time for order id ${order.id} is  ${foodWaitTime}`);
 
+    const courierWaitTime = currentTs - courier.arrivedAtTs;
+    this.statistics.recordCourierWaitTime(courierWaitTime);
     console.log(
-      `Arriving wait time for courier id ${courier.courierId} is ${
-        currentTs - courier.arrivedAtTs
-      }`
+      `Arriving wait time for courier id ${courier.courierId} is ${courierWaitTime}`
     );
   }
 }

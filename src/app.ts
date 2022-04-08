@@ -32,31 +32,37 @@ class App {
   private static strategy: IDispatchStrategy;
   static init(): void {
     log(chalk.blue(`Initilizing application`));
+    const STRATEGY = process.env.npm_config_stg
+      ? DISPATCH_STRATEGY.fromString(process.env.npm_config_stg)
+      : APP_CONSTANT.DEFAULT_DISPATCH_STRATEGY;
+    if (!STRATEGY) {
+      log(
+        chalk.redBright(
+          `Invalid strategy. Please use --stg=FIFO or --stg=MATCHED or none.`
+        )
+      );
+      return;
+    }
     App.orderData = orderJson as IOrder[];
     App.kitchen = new Kitchen();
     App.courierDispatcher = new CourierDispatcher();
     App.statistics = new Statistics();
-    App.strategy = new DispatchStrategy(
-      APP_CONSTANT.DISPATCH_STRATEGY,
-      this.statistics
-    );
+    App.strategy = new DispatchStrategy(STRATEGY, this.statistics);
     App.handler = new OrderCourierHandler(this.strategy);
     App.orderProcessor = new OrderProcessor(
       this.kitchen,
       this.courierDispatcher,
       this.handler
     );
-    App.start();
+    App.start(STRATEGY);
   }
 
-  static start(): void {
+  static start(strategy: DISPATCH_STRATEGY): void {
     log(
       chalk.whiteBright(
         `Starting application to process ${chalk.green(
           this.orderData.length.toString()
-        )} orders with ${DISPATCH_STRATEGY.toString(
-          APP_CONSTANT.DISPATCH_STRATEGY
-        )} strategy`
+        )} orders with ${DISPATCH_STRATEGY.toString(strategy)} strategy`
       )
     );
     App.processOrderData();

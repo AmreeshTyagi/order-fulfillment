@@ -44,9 +44,12 @@ export class Matched implements IDispatchStrategy {
     if (this.preparedQueue.length) {
       //Pick random order
       const order = this.pickOrder(courier);
-      courier.orderId = order.id;
-      this.deliverOrder(courier);
-      this.recordStats(courier, order, new Date().getTime());
+      if (order) {
+        this.deliverOrder(courier);
+        this.recordStats(courier, order, new Date().getTime());
+      } else {
+        this.courierWaitQueue.push(courier);
+      }
     } else {
       this.courierWaitQueue.push(courier);
     }
@@ -54,7 +57,7 @@ export class Matched implements IDispatchStrategy {
     //If no order available in queue, put courier to waiting line
   }
 
-  pickCourier(courier: ICourier) {
+  pickCourier(order: IOrder) {
     // Pick courier if it has given order assigned.
     const courierIndex = this.courierWaitQueue.findIndex(
       (courier) => courier.orderId == order.id
@@ -69,30 +72,24 @@ export class Matched implements IDispatchStrategy {
     }
   }
 
-  pickOrder() {
-   
+  pickOrder(courier: ICourier) {
     // Pick order if it is assigned to given courier.
     const orderIndex = this.preparedQueue.findIndex(
-      (courier) => courier.orderId == order.id
+      (order) => order.id == courier.orderId
     );
-    if (courierIndex > -1) {
-      const courier = this.courierWaitQueue[courierIndex];
-      // Remove from queue once courier is ready for pickup
-      this.courierWaitQueue.splice(courierIndex, 1);
-      return courier;
+    if (orderIndex > -1) {
+      const order = this.preparedQueue[orderIndex];
+      // Remove from queue once order is pickedup
+      this.preparedQueue.splice(orderIndex, 1);
+      console.log(
+        `${chalk.yellow(`ORDER PICKED`)} with id ${getColoredId(
+          order.id.toString()
+        )}`
+      );
+      return order;
     } else {
       return null;
     }
-
-    const randomIndex = Math.floor(Math.random() * this.preparedQueue.length);
-    const order = this.preparedQueue[randomIndex];
-    this.preparedQueue.splice(randomIndex, 1);
-    console.log(
-      `${chalk.yellow(`ORDER PICKED`)} with id ${getColoredId(
-        order.id.toString()
-      )}`
-    );
-    return order;
   }
 
   deliverOrder(courier: ICourier) {

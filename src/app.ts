@@ -54,7 +54,9 @@ class App {
       chalk.whiteBright(
         `Starting application to process ${chalk.green(
           this.orderData.length.toString()
-        )} orders`
+        )} orders with ${DISPATCH_STRATEGY.toString(
+          APP_CONSTANT.DISPATCH_STRATEGY
+        )} strategy`
       )
     );
     App.processOrderData();
@@ -81,10 +83,6 @@ class App {
           );
           App.receiveOrder(batch);
           await delay(App.receiveFrequency);
-        } else {
-          setTimeout(function () {
-            App.statistics.print();
-          }, 2000);
         }
       }
     }
@@ -94,7 +92,11 @@ class App {
 
   static receiveOrder(order: IOrder[]) {
     order.forEach((element) => {
-      console.log(`Sending order id ${element.id} name ${element.name}`);
+      console.log(
+        `SENDING ORDER with id ${element.id.substring(24, 36)} name ${
+          element.name
+        }`
+      );
       this.orderProcessor.receiveOrder(element);
     });
   }

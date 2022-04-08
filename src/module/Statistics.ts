@@ -30,10 +30,10 @@ export class Statistics {
     const courierWT = this.getAverageFoodWaitTime();
     const foodWT = this.getAverageFoodWaitTime();
     console.log(
-      `Average food wait time (milliseconds) between order ready and pickup ${foodWT}`
+      `Average food wait time: ${foodWT}ms`
     );
     console.log(
-      `Average courier wait time (milliseconds) between arrival and order pickup ${courierWT}`
+      `Average courier wait time: ${courierWT}ms`
     );
   }
 }

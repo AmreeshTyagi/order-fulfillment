@@ -21,12 +21,12 @@ export class CourierDispatcher implements ICourierDispatcher {
   constructor() {}
 
   public async dispatchCourier() {
-    await delay(
-      getUniformRandom(
-        this.courierArrivingMINDelay,
-        this.courierArrivingMAXDelay
-      )
+    //Delay time in seconds
+    const delayTime = getUniformRandom(
+      this.courierArrivingMINDelay,
+      this.courierArrivingMAXDelay
     );
+    await delay(delayTime*1000);  // Delay time in ms
     let courier = {} as ICourier;
     courier.courierId = this.courierCounter.toString();
     this.courierCounter++;

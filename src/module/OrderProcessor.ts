@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import { DISPATCH_STRATEGY } from "../enum";
 import {
   ICourier,
@@ -18,7 +19,7 @@ export class OrderProcessor implements IOrderProcessor {
   constructor(
     kitchen: IKitchen,
     dispatcher: ICourierDispatcher,
-    handler: IOrderCourierHandler,
+    handler: IOrderCourierHandler
   ) {
     this.kitchen = kitchen;
     this.dispatcher = dispatcher;
@@ -26,15 +27,26 @@ export class OrderProcessor implements IOrderProcessor {
   }
 
   receiveOrder(order: IOrder): void {
+    console.log(
+      `${chalk.yellow(`ORDER RECEIVED`)} with id ${chalk
+        .hex(`#` + order.id.substring(30, 36))
+        .bold(order.id.substring(24, 36))}`
+    );
     this.prepareOrder(order);
-    this.dispatchCourier(order);
+    this.dispatchCourier();
   }
   prepareOrder(order: IOrder) {
     this.kitchen.prepareOrder(order).then((order) => {
+      console.log(
+        `${chalk.blue(`ORDER PREPARED`)} with id ${chalk
+          .hex(`#` + order.id.substring(30, 36))
+          .bold(order.id.substring(24, 36))}`
+      );
       this.handler.handlePreparedOrder(order);
     });
   }
-  dispatchCourier(order: IOrder): void {
+  dispatchCourier(): void {
+    console.log(`${chalk.yellow(`COURIER DISPATCHED`)}`);
     this.dispatcher.dispatchCourier().then((courier) => {
       this.handler.handleArrivedCourier(courier);
     });

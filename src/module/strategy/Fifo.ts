@@ -1,26 +1,21 @@
 import chalk from "chalk";
-import { isNullOrUndefined } from "util";
-import { DISPATCH_STRATEGY } from "../../enum";
-import { getRandomFromArray } from "../../helper/array.random";
-import { getColoredOrderId } from "../../helper/logger";
-import {
-  ICourier,
-  IDispatchStrategy,
-  IOrder,
-  IOrderCourierHandler,
-} from "../../interface";
+import { getColoredId } from "../../helper/logger";
+import orderJson from "../../../bin/dispatch_orders.small.json";
+
+import { ICourier, IDispatchStrategy, IOrder } from "../../interface";
 import { Statistics } from "../Statistics";
 
 export class Fifo implements IDispatchStrategy {
   preparedQueue: IOrder[];
   courierWaitQueue: ICourier[];
-
+  deliveryCounter: number;
   statistics: Statistics;
 
   constructor(statistics: Statistics) {
     this.preparedQueue = [];
     this.courierWaitQueue = [];
     this.statistics = statistics;
+    this.deliveryCounter = 0;
   }
 
   handlePreparedOrder(order: IOrder) {
@@ -30,7 +25,7 @@ export class Fifo implements IDispatchStrategy {
       let courier = this.pickCourier(order);
       //Deliver order with this courier
       this.deliverOrder(courier);
-      this.calculateStats(courier, order, new Date().getTime());
+      this.recordStats(courier, order, new Date().getTime());
     } else {
       //No courier is available, so push order to queue
       this.preparedQueue.push(order);
@@ -44,10 +39,10 @@ export class Fifo implements IDispatchStrategy {
     );
     if (this.preparedQueue.length) {
       //Pick random order
-      let order = this.pickOrder();
+      const order = this.pickOrder();
       courier.orderId = order.id;
       this.deliverOrder(courier);
-      this.calculateStats(courier, order, new Date().getTime());
+      this.recordStats(courier, order, new Date().getTime());
     } else {
       this.courierWaitQueue.push(courier);
     }
@@ -56,17 +51,17 @@ export class Fifo implements IDispatchStrategy {
   }
 
   pickCourier(order: IOrder) {
-    let courier = this.courierWaitQueue.shift();
+    const courier = this.courierWaitQueue.shift(); // FIFO
     courier.orderId = order.id;
     return courier;
   }
 
   pickOrder() {
-    let randomIndex = Math.floor(Math.random() * this.preparedQueue.length);
-    let order = this.preparedQueue[randomIndex];
+    const randomIndex = Math.floor(Math.random() * this.preparedQueue.length);
+    const order = this.preparedQueue[randomIndex];
     this.preparedQueue.splice(randomIndex, 1);
     console.log(
-      `${chalk.yellow(`ORDER PICKED`)} with id ${getColoredOrderId(
+      `${chalk.yellow(`ORDER PICKED`)} with id ${getColoredId(
         order.id.toString()
       )}`
     );
@@ -74,23 +69,32 @@ export class Fifo implements IDispatchStrategy {
   }
 
   deliverOrder(courier: ICourier) {
+    this.deliveryCounter++;
     console.log(
-      `${chalk.green(`ORDER DELIVERED`)} with id ${getColoredOrderId(
+      `${chalk.green(`ORDER DELIVERED`)} with id ${getColoredId(
         courier.orderId.toString()
       )}`
     );
   }
 
-  calculateStats(courier: ICourier, order: IOrder, currentTs: number) {
+  recordStats(courier: ICourier, order: IOrder, currentTs: number) {
     const foodWaitTime = currentTs - order.preparedAtTs;
     this.statistics.recordFoodWaitTime(foodWaitTime);
-    console.log(`Food waiting time: ${foodWaitTime}ms`);
+    console.log(
+      `${chalk.cyan(`Food waiting time for order`)} ${getColoredId(
+        order.id.toString()
+      )}: ${chalk.whiteBright(foodWaitTime.toString())}ms`
+    );
 
     const courierWaitTime = currentTs - courier.arrivedAtTs;
     this.statistics.recordCourierWaitTime(courierWaitTime);
-    console.log(`Arriving waiting time : ${courierWaitTime}ms`);
+    console.log(
+      `${chalk.cyan(`Arriving waiting time for courier`)} ${getColoredId(
+        courier.courierId.toString()
+      )}: ${chalk.whiteBright(courierWaitTime.toString())}ms`
+    );
 
-    if (this.courierWaitQueue.length == 0 && this.preparedQueue.length == 0) {
+    if (this.deliveryCounter == orderJson.length) {
       this.statistics.print();
     }
   }

@@ -33,7 +33,7 @@ export class OrderProcessor implements IOrderProcessor {
         .bold(order.id.substring(24, 36))}`
     );
     this.prepareOrder(order);
-    this.dispatchCourier();
+    this.dispatchCourier(order);
   }
   prepareOrder(order: IOrder) {
     this.kitchen.prepareOrder(order).then((order) => {
@@ -45,9 +45,9 @@ export class OrderProcessor implements IOrderProcessor {
       this.handler.handlePreparedOrder(order);
     });
   }
-  dispatchCourier(): void {
+  dispatchCourier(order): void {
     console.log(`${chalk.yellow(`COURIER DISPATCHED`)}`);
-    this.dispatcher.dispatchCourier().then((courier) => {
+    this.dispatcher.dispatchCourier(order).then((courier) => {
       this.handler.handleArrivedCourier(courier);
     });
   }

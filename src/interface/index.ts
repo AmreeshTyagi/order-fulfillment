@@ -19,7 +19,7 @@ export interface IKitchen {
 export interface IOrder {
   id: String;
   name: String;
-  prepTime: Number;
+  prepTime: number;
   preparedAtTs?: number;
 }
 
@@ -30,7 +30,7 @@ export interface ICourierDispatcher {
   strategy: IDispatchStrategy;
   courierDelay: Number;
 
-  dispatchCourier(): Promise<ICourier>;
+  dispatchCourier(order:IOrder): Promise<ICourier>;
 }
 
 export interface IOrderCourierHandler {

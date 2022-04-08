@@ -20,18 +20,18 @@ export class CourierDispatcher implements ICourierDispatcher {
 
   constructor() {}
 
-  public async dispatchCourier() {
+  public async dispatchCourier(order: IOrder) {
     //Delay time in seconds
     const delayTime = getUniformRandom(
       this.courierArrivingMINDelay,
       this.courierArrivingMAXDelay
     );
-    await delay(delayTime*1000);  // Delay time in ms
+    await delay(delayTime * 1000); // Delay time in ms
     let courier = {} as ICourier;
     courier.courierId = this.courierCounter.toString();
+    courier.orderId = order.id;
     this.courierCounter++;
     courier.arrivedAtTs = new Date().getTime();
-
     return courier;
   }
 }

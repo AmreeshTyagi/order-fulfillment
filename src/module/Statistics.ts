@@ -1,3 +1,5 @@
+import chalk from "chalk";
+
 export class Statistics {
   foodWaitTime: number[]; //Average food wait time (milliseconds) between order ready and pickup
   courierWaitTime: number[]; // Average courier wait time (milliseconds) between arrival and order pickup
@@ -27,13 +29,9 @@ export class Statistics {
   }
 
   print() {
-    const courierWT = this.getAverageFoodWaitTime();
     const foodWT = this.getAverageFoodWaitTime();
-    console.log(
-      `Average food wait time: ${foodWT}ms`
-    );
-    console.log(
-      `Average courier wait time: ${courierWT}ms`
-    );
+    const courierWT = this.getAverageCourierWaitTime();
+    console.log(`${chalk.bgCyan(`Average food wait time: ${foodWT}ms`)}`);
+    console.log(`${chalk.bgCyan(`Average courier wait time: ${courierWT}ms`)}`);
   }
 }

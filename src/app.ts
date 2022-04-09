@@ -9,7 +9,7 @@ import {
 } from "./interface";
 import chalk from "chalk";
 import * as fs from "fs";
-import orderJson from "../bin/dispatch_orders.small.json";
+import orderJson from "../bin/dispatch_orders.json";
 import { OrderProcessor } from "./module/OrderProcessor";
 import { Kitchen } from "./module/Kitchen";
 import { delay } from "./helper/delay";
@@ -32,17 +32,17 @@ class App {
   private static strategy: IDispatchStrategy;
   static init(): void {
     log(chalk.blue(`Initilizing application`));
-    const STRATEGY = process.env.npm_config_stg
-      ? DISPATCH_STRATEGY.fromString(process.env.npm_config_stg)
-      : APP_CONSTANT.DEFAULT_DISPATCH_STRATEGY;
-    if (!STRATEGY) {
+    const STRATEGY = this.getStrategy();
+
+    if (!DISPATCH_STRATEGY.toString(STRATEGY)) {
       log(
         chalk.redBright(
-          `Invalid strategy. Please use --stg=FIFO or --stg=MATCHED or none.`
+          `Invalid strategy. Please use --strategy=FIFO or --strategy=MATCHED or none. Default is FIFO.`
         )
       );
       return;
     }
+
     App.orderData = orderJson as IOrder[];
     App.kitchen = new Kitchen();
     App.courierDispatcher = new CourierDispatcher();
@@ -57,6 +57,12 @@ class App {
     App.start(STRATEGY);
   }
 
+  static getStrategy() {
+    const STRATEGY = process.env.npm_config_strategy
+      ? DISPATCH_STRATEGY.fromString(process.env.npm_config_strategy)
+      : APP_CONSTANT.DEFAULT_DISPATCH_STRATEGY;
+    return STRATEGY;
+  }
   static start(strategy: DISPATCH_STRATEGY): void {
     log(
       chalk.whiteBright(

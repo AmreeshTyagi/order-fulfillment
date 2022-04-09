@@ -1,6 +1,6 @@
 import chalk from "chalk";
 import { getColoredId } from "../../helper/logger";
-import orderJson from "../../../bin/dispatch_orders.small.json";
+import orderJson from "../../../bin/dispatch_orders.json";
 
 import { ICourier, IDispatchStrategy, IOrder } from "../../interface";
 import { Statistics } from "../Statistics";

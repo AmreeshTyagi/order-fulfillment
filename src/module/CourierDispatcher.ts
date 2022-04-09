@@ -1,19 +1,18 @@
-import { delay } from '../helper/delay';
-import { getUniformRandom } from '../helper/uniform-random';
-import { ICourier, ICourierDispatcher, IDispatchStrategy, IOrder } from '../interface';
+import { APP_CONSTANT } from "../constant/APP_CONSTANT";
+import { delay } from "../helper/delay";
+import { getUniformRandom } from "../helper/uniform-random";
+import { ICourier, ICourierDispatcher, IOrder } from "../interface";
 
 export class CourierDispatcher implements ICourierDispatcher {
-  courierCounter = 0;
-  courierArrivingMINDelay = 3;
-  courierArrivingMAXDelay = 15;
+  courierCounter: number;
+  courierArrivingMINDelay: number;
+  courierArrivingMAXDelay: number;
 
-  arrivedQueue: [ICourier];
-  dispatchOrderQueue: [ICourier];
-  courierWaitQueue: [ICourier];
-  strategy: IDispatchStrategy;
-  courierDelay: Number;
-
-  constructor() {}
+  constructor() {
+    this.courierCounter = 0;
+    this.courierArrivingMINDelay = APP_CONSTANT.COURIER_ARRIVING_MIN_DELAY;
+    this.courierArrivingMAXDelay = APP_CONSTANT.COURIER_ARRIVING_MAX_DELAY;
+  }
 
   public async dispatchCourier(order: IOrder) {
     //Delay time in seconds

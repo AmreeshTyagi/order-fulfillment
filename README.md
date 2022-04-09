@@ -34,11 +34,24 @@ This application can be run with or without passing any runtime arguments.
    npm run dev
    ```
 
+### **Unit tests**
+Jest framework for Unit testing. You can modify jest settings from `jest.config.js` as per your need.
+
+To run test execute:
+```sh
+npm run test
+```
+
 ### **Results**
 
 You will see results like below, which will give you information about all order processing statuses along with food wait time & arriving wait time for every order and average of them once all orders are delivered.
 
 ![results](results.png)
+
+
+### **Class diagram**
+
+![Class Diagram](order-fulfillment-system..drawio-final.png)
 
 ### **Author**
 Amreesh Tyagi

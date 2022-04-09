@@ -119,7 +119,7 @@ export class Matched implements IDispatchStrategy {
     );
 
     if (this.deliveryCounter == orderJson.length) {
-      this.statistics.print();
+      this.statistics.printAverageStats();
     }
   }
 }

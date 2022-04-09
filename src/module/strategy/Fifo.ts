@@ -95,7 +95,7 @@ export class Fifo implements IDispatchStrategy {
     );
 
     if (this.deliveryCounter == orderJson.length) {
-      this.statistics.print();
+      this.statistics.printAverageStats();
     }
   }
 }

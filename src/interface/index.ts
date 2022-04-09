@@ -9,8 +9,6 @@ export interface IOrderProcessor {
 }
 
 export interface IKitchen {
-  preparedQueue: IOrder[];
-
   prepareOrder(order: IOrder): Promise<IOrder>;
 }
 
@@ -22,13 +20,10 @@ export interface IOrder {
 }
 
 export interface ICourierDispatcher {
-  arrivedQueue: [ICourier];
-  dispatchOrderQueue: [ICourier];
-  courierWaitQueue: [ICourier];
-  strategy: IDispatchStrategy;
-  courierDelay: Number;
-
-  dispatchCourier(order:IOrder): Promise<ICourier>;
+  courierCounter: number;
+  courierArrivingMINDelay: number;
+  courierArrivingMAXDelay: number;
+  dispatchCourier(order: IOrder): Promise<ICourier>;
 }
 
 export interface IOrderCourierHandler {

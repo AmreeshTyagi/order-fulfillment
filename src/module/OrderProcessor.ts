@@ -1,4 +1,4 @@
-import chalk from 'chalk';
+import chalk from "chalk";
 
 import {
   ICourierDispatcher,
@@ -7,13 +7,12 @@ import {
   IOrder,
   IOrderCourierHandler,
   IOrderProcessor,
-} from '../interface';
+} from "../interface";
 
 export class OrderProcessor implements IOrderProcessor {
   kitchen: IKitchen;
   dispatcher: ICourierDispatcher;
   handler: IOrderCourierHandler;
-  strategy: IDispatchStrategy;
 
   constructor(
     kitchen: IKitchen,
@@ -44,7 +43,7 @@ export class OrderProcessor implements IOrderProcessor {
       this.handler.handlePreparedOrder(order);
     });
   }
-  dispatchCourier(order): void {
+  dispatchCourier(order: IOrder): void {
     console.log(`${chalk.yellow(`COURIER DISPATCHED`)}`);
     this.dispatcher.dispatchCourier(order).then((courier) => {
       this.handler.handleArrivedCourier(courier);

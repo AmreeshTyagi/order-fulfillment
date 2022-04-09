@@ -28,7 +28,7 @@ export class Statistics {
     return avg;
   }
 
-  print() {
+  printAverageStats() {
     const foodWT = this.getAverageFoodWaitTime();
     const courierWT = this.getAverageCourierWaitTime();
     console.log(`${chalk.bgCyan(`Average food wait time: ${foodWT}ms`)}`);

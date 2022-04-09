@@ -1,23 +1,17 @@
-import { APP_CONSTANT } from "./constant/APP_CONSTANT";
-import {
-  ICourierDispatcher,
-  IDispatchStrategy,
-  IKitchen,
-  IOrder,
-  IOrderCourierHandler,
-  IOrderProcessor,
-} from "./interface";
-import chalk from "chalk";
-import * as fs from "fs";
-import orderJson from "../bin/dispatch_orders.json";
-import { OrderProcessor } from "./module/OrderProcessor";
-import { Kitchen } from "./module/Kitchen";
-import { delay } from "./helper/delay";
-import { OrderCourierHandler } from "./module/OrderCourierHandler";
-import { DISPATCH_STRATEGY } from "./enum";
-import { DispatchStrategy } from "./module/DispatchStrategy";
-import { CourierDispatcher } from "./module/CourierDispatcher";
-import { Statistics } from "./module/Statistics";
+import chalk from 'chalk';
+
+import orderJson from '../bin/dispatch_orders.json';
+import { APP_CONSTANT } from './constant/APP_CONSTANT';
+import { DISPATCH_STRATEGY } from './enum';
+import { delay } from './helper/delay';
+import { ICourierDispatcher, IDispatchStrategy, IKitchen, IOrder, IOrderCourierHandler, IOrderProcessor } from './interface';
+import { CourierDispatcher } from './module/CourierDispatcher';
+import { DispatchStrategy } from './module/DispatchStrategy';
+import { Kitchen } from './module/Kitchen';
+import { OrderCourierHandler } from './module/OrderCourierHandler';
+import { OrderProcessor } from './module/OrderProcessor';
+import { Statistics } from './module/Statistics';
+
 const log = console.log;
 
 class App {

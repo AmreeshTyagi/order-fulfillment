@@ -1,14 +1,13 @@
-import chalk from "chalk";
-import { DISPATCH_STRATEGY } from "../enum";
+import chalk from 'chalk';
+
 import {
-  ICourier,
   ICourierDispatcher,
   IDispatchStrategy,
   IKitchen,
   IOrder,
   IOrderCourierHandler,
   IOrderProcessor,
-} from "../interface";
+} from '../interface';
 
 export class OrderProcessor implements IOrderProcessor {
   kitchen: IKitchen;

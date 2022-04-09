@@ -1,4 +1,4 @@
-import chalk from "chalk";
+import chalk from 'chalk';
 
 export class Statistics {
   foodWaitTime: number[]; //Average food wait time (milliseconds) between order ready and pickup

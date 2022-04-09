@@ -39,3 +39,9 @@ This application can be run with or without passing any runtime arguments.
 You will see results like below, which will give you information about all order processing statuses along with food wait time & arriving wait time for every order and average of them once all orders are delivered.
 
 ![results](results.png)
+
+### **Author**
+Amreesh Tyagi
+
+### **License**
+[MIT](https://github.com/AmreeshTyagi/order-fulfillment/blob/main/LICENSE)

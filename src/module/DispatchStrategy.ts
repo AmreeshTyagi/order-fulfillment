@@ -1,8 +1,8 @@
-import { DISPATCH_STRATEGY } from "../enum";
-import { ICourier, IDispatchStrategy, IOrder } from "../interface";
-import { Statistics } from "./Statistics";
-import { Fifo } from "./strategy/Fifo";
-import { Matched } from "./strategy/Matched";
+import { DISPATCH_STRATEGY } from '../enum';
+import { ICourier, IDispatchStrategy, IOrder } from '../interface';
+import { Statistics } from './Statistics';
+import { Fifo } from './strategy/Fifo';
+import { Matched } from './strategy/Matched';
 
 export class DispatchStrategy implements IDispatchStrategy {
   strategy: IDispatchStrategy;

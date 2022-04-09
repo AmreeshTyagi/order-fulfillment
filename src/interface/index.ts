@@ -1,5 +1,3 @@
-import { DISPATCH_STRATEGY, ORDER_STATUS } from "../enum";
-
 export interface IOrderProcessor {
   kitchen: IKitchen;
   dispatcher: ICourierDispatcher;

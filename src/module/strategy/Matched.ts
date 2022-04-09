@@ -1,9 +1,9 @@
-import chalk from "chalk";
-import { getColoredId } from "../../helper/logger";
-import orderJson from "../../../bin/dispatch_orders.json";
+import chalk from 'chalk';
 
-import { ICourier, IDispatchStrategy, IOrder } from "../../interface";
-import { Statistics } from "../Statistics";
+import orderJson from '../../../bin/dispatch_orders.json';
+import { getColoredId } from '../../helper/logger';
+import { ICourier, IDispatchStrategy, IOrder } from '../../interface';
+import { Statistics } from '../Statistics';
 
 export class Matched implements IDispatchStrategy {
   preparedQueue: IOrder[];

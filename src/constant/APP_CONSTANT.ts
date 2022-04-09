@@ -1,4 +1,4 @@
-import { DISPATCH_STRATEGY } from "../enum";
+import { DISPATCH_STRATEGY } from '../enum';
 
 const APP_CONSTANT = {
   ORDER_RECEIVE_COUNT: 2,

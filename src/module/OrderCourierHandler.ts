@@ -1,11 +1,4 @@
-import { DISPATCH_STRATEGY, ORDER_STATUS } from "../enum";
-import { Notifier } from "./Notifier";
-import {
-  ICourier,
-  IDispatchStrategy,
-  IOrder,
-  IOrderCourierHandler,
-} from "../interface";
+import { ICourier, IDispatchStrategy, IOrder, IOrderCourierHandler } from '../interface';
 
 export class OrderCourierHandler implements IOrderCourierHandler {
   dispatchStrategy: IDispatchStrategy;

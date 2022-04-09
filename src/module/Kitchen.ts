@@ -1,7 +1,5 @@
-import { delay } from "../helper/delay";
-import { ORDER_STATUS } from "../enum";
-import { IKitchen, IOrder } from "../interface";
-import dayjs from "dayjs";
+import { delay } from '../helper/delay';
+import { IKitchen, IOrder } from '../interface';
 
 export class Kitchen implements IKitchen {
   preparedQueue: IOrder[];

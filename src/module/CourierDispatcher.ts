@@ -1,11 +1,6 @@
-import { delay } from "../helper/delay";
-import { getUniformRandom } from "../helper/uniform-random";
-import {
-  ICourier,
-  ICourierDispatcher,
-  IDispatchStrategy,
-  IOrder,
-} from "../interface";
+import { delay } from '../helper/delay';
+import { getUniformRandom } from '../helper/uniform-random';
+import { ICourier, ICourierDispatcher, IDispatchStrategy, IOrder } from '../interface';
 
 export class CourierDispatcher implements ICourierDispatcher {
   courierCounter = 0;
